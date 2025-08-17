@@ -18,12 +18,12 @@ export default function UserContextProvider({children}){
         if(token){
             getUserData(token);
         }
-        getUserData(null);
+        
     },[token])
     async function getUserData(token){
         try{
 
-            let {data} = await axios.get("https://linked-posts.routemisr.com/users/profile-data",{
+            let {data} = await axios.get(`${import.meta.env.VITE_BASE_URL}/users/profile-data`,{
                 headers:{
                     token:token
                 }

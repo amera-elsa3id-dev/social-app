@@ -59,7 +59,7 @@ export default function Register() {
 async function onSubmit(values){
   console.log(values);
   try{
-    let {data}= await axios.post("https://linked-posts.routemisr.com/users/signup",values)
+    let {data}= await axios.post(`${import.meta.env.VITE_BASE_URL}/users/signup`,values)
     console.log(data);
     setSuccess("User registered successfully");
     setApiError(null);

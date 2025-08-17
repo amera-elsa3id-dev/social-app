@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import axios from 'axios'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { HiInformationCircle } from 'react-icons/hi'
 import { useNavigate } from 'react-router-dom'
@@ -24,6 +24,7 @@ const schema=z.object({
  
 })
 export default function Login() {
+
   const {token,setToken} = useContext(UserContext);
   console.log(token);
   let navigate=useNavigate()
@@ -37,7 +38,7 @@ export default function Login() {
     async function onSubmit(values){
       console.log(values);
       try{
-        let {data}= await axios.post("https://linked-posts.routemisr.com/users/signin",values)
+        let {data}= await axios.post(`${import.meta.env.VITE_BASE_URL}/users/signin`,values)
         console.log(data);
         setSuccess("User logged in successfully");
         setApiError(null);
@@ -50,7 +51,7 @@ export default function Login() {
       catch(error){
         console.log(error);
         setSuccess(null);
-        setApiError(error.response.data.error);
+        setApiError(error.response?.data?.error);
       }
     }
   return (
@@ -91,7 +92,7 @@ export default function Login() {
           <Button disabled={!isValid} type="submit"> { isSubmitting && <Spinner aria-label="Spinner button example" size="sm" light /> } <span className="pl-3">Submit</span></Button>
             </form>
           </div>
-          
+         
         </div>
   )
 }
